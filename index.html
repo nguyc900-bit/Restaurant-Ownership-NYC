@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Who Really Owns the Restaurants You Eat At?</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+:root{
+ --ink:#000; --bg:#fff; --panel:#ECECEC; --highlight:#E9A3AA;
+ --local:#3E6344; --pe:#A33F39; --blue:#003FC7;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:20px;line-height:1.35}
+section{min-height:100vh;padding:7vw 8vw;display:flex;flex-direction:column;justify-content:center;position:relative}
+h1,h2,h3,p{margin-top:0} h1{font-size:clamp(38px,6vw,72px);line-height:.98;font-weight:700;letter-spacing:-.04em} h2{font-size:32px;line-height:1.05;font-weight:700;letter-spacing:-.02em} h3{font-size:24px;font-weight:600}.subtitle{font-size:24px;font-weight:600}.source{font-size:16px;margin-top:24px}.label{font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}.muted{color:#555}.eyebrow{font-size:16px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.hero{background:#fff;min-height:100vh}.hero h1{max-width:1000px}.scroll{position:absolute;bottom:30px;left:8vw;font-size:16px;font-weight:600}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}.panel{background:var(--panel);padding:34px;border:1px solid var(--ink)}.panel h3{margin-bottom:18px}.panel ul{margin:0;padding-left:25px}.panel li{margin:8px 0}
+.compare .panel:first-child{border-top:7px solid var(--local)} .compare .panel:last-child{border-top:7px solid var(--pe)}
+.layers{max-width:800px;margin:40px auto}.layer{border:2px solid var(--ink);padding:22px;text-align:center;font-size:24px;font-weight:600;background:#fff}.arrow{text-align:center;font-size:32px;padding:6px}
+.evidence{background:#fff}.evidence-card{background:var(--panel);padding:38px;max-width:1000px;margin:25px auto 0;border-left:8px solid var(--highlight)}.evidence-card p{margin:0 0 22px}.evidence-card p:last-child{margin-bottom:0}
+.timeline{display:grid;grid-template-columns:130px 1fr;gap:18px;margin-top:20px}.year{font-weight:700;font-size:24px}.event{border-left:3px solid var(--ink);padding:0 0 25px 20px}
+.turn{background:var(--highlight)}.turn h2{font-size:clamp(38px,6vw,64px);max-width:1000px}.turn strong{display:block;margin-top:40px;font-size:clamp(28px,4vw,48px);line-height:1.05}
+.gap .panel{min-height:330px}.gap h3{text-align:center}.gap ul{font-size:22px}
+.question{text-align:center}.question h1{max-width:1200px;margin:0 auto 50px}.profile{width:min(620px,100%);margin:0 auto;border:2px solid var(--ink);text-align:left;cursor:pointer;background:#fff}.profile-head{padding:24px;border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;gap:15px}.verified{background:var(--blue);color:#fff;padding:8px 12px;font-size:14px;font-weight:600;white-space:nowrap}.profile-body>div{padding:22px;border-bottom:1px solid var(--ink)}.profile-body>div:last-child{border-bottom:0}.profile .label{font-size:12px}.profile strong{font-size:22px}.profile-details{display:none}.profile.open .profile-details{display:block}.profile-details p{font-size:16px;margin:8px 0}.profile-foot{background:var(--panel);padding:15px 22px;font-size:14px;display:flex;justify-content:space-between}
+.final{text-align:center}.final h1{max-width:1000px;margin:0 auto 40px}.final .ask{font-size:32px;font-weight:600;max-width:850px;margin:0 auto}
+.interaction{font-size:14px;color:#555;text-align:center;margin-top:40px;font-style:italic}
+@media(max-width:700px){section{padding:55px 24px}.grid2{grid-template-columns:1fr}.timeline{grid-template-columns:80px 1fr}.panel{padding:24px}.profile-foot{display:block}.profile-foot span{display:block;margin:4px 0}}
+</style>
+</head>
+<body>
+<section class="hero">
+<div class="eyebrow">NYC RESTAURANT OWNERSHIP</div>
+<h1>WHO REALLY OWNS THE RESTAURANTS YOU EAT AT?</h1>
+<p class="subtitle">Restaurant ownership is more complex than it looks.</p>
+<div class="scroll">↓ Scroll to reveal the question</div>
+</section>
+
+<section>
+<div class="eyebrow">Context</div>
+<h2>A restaurant can look local and authentic without being independently owned.</h2>
+<div class="grid2 compare" style="margin-top:40px">
+<div class="panel"><h3>WHAT I SEE</h3><ul><li>Food</li><li>Atmosphere</li><li>Reviews</li><li>Location</li><li>Branding</li></ul></div>
+<div class="panel"><h3>WHAT I DON'T SEE</h3><ul><li>Parent company</li><li>Restaurant group</li><li>Holding company</li><li>Acquisition history</li></ul></div>
+</div>
+<p class="interaction">Scroll through the “What I see / What I don’t see” comparison.</p>
+</section>
+
+<section>
+<div class="eyebrow">The Hidden Layer</div>
+<h2>Though many restaurants are family- or independently owned, ownership structures can also look like this:</h2>
+<div class="layers">
+<div class="layer" data-tip="The restaurant diners recognize.">RESTAURANT</div>
+<div class="arrow">↓</div>
+<div class="layer" data-tip="A company operating multiple restaurant concepts.">RESTAURANT GROUP</div>
+<div class="arrow">↓</div>
+<div class="layer" data-tip="A parent or holding entity may sit above the operating group.">PARENT / HOLDING COMPANY</div>
+</div>
+<p class="muted" style="text-align:center">Ownership structures vary, and not every restaurant has all three layers.</p>
+<p class="interaction">Hover or click each layer to reveal more information.</p>
+</section>
+
+<section class="evidence">
+<div class="eyebrow">Evidence 1</div>
+<h1 style="text-align:center">LOS TACOS NO. 1</h1>
+<p class="subtitle" style="text-align:center">Started in Chelsea Market / NYC</p>
+<div class="evidence-card">
+<p><span class="label">Founded:</span> 2013 by Christian Pineda, Tyler Sanders &amp; Kyle Cameron</p>
+<p><span class="label">Ownership / Investment:</span> Strategic investment from TSG Consumer Partners, a private-equity firm</p>
+<p><span class="label">Ownership Change:</span> September 2026 — TSG Consumer Partners invested in Los Tacos No. 1 to support expansion. Financial terms and the size of TSG's stake were not disclosed.</p>
+<p><span class="label">Current Leadership:</span> Christian Pineda — Co-founder &amp; CEO<br>Jacobo Ackerman — Chief Operating Partner</p>
+<p class="source"><span class="label">Sources:</span> QSR Magazine, Sept. 4, 2026 · Los Tacos No. 1 — Official Website</p>
+</div>
+<p class="interaction">Scroll through the timeline to reveal how the restaurant's ownership structure changed over time.</p>
+</section>
+
+<section class="evidence">
+<div class="eyebrow">Evidence 2</div>
+<h1 style="text-align:center">POPUP BAGELS</h1>
+<p class="subtitle" style="text-align:center">Started in Westport, Connecticut</p>
+<div class="evidence-card">
+<p><span class="label">Founded:</span> 2020 by Adam Goldberg</p>
+<p><span class="label">Ownership / Investment:</span> Backed by outside investors including Stripes, Tastemaker Capital, Habitat Partners, and Tiger Global</p>
+<p><span class="label">Ownership Change:</span> 2022–2026 — PopUp Bagels raised multiple rounds of outside funding, including a $8M Series A led by Stripes in 2023, a $27M Series B led by Stripes in 2024, and a 2026 investment from Tiger Global at a reported $300M valuation. Exact ownership stakes were not disclosed.</p>
+<p><span class="label">Current Leadership:</span> Tory Bartlett — CEO</p>
+<p class="source"><span class="label">Sources:</span> Consumed, “Inside the Venture-Backed Bagel Boom” · DLA Piper · GlobeNewswire · Bloomberg Law</p>
+</div>
+<p class="interaction">Scroll through the timeline to reveal how outside investment accompanied PopUp Bagels' expansion.</p>
+</section>
+
+<section class="turn">
+<div class="eyebrow">The Turn</div>
+<h2>The problem isn’t simply corporate ownership.</h2>
+<strong>THE PROBLEM IS HOW DIFFICULT OWNERSHIP INFORMATION CAN BE FOR DINERS TO FIND.</strong>
+<p class="interaction">Scroll from individual examples to the larger information gap.</p>
+</section>
+
+<section class="gap">
+<div class="eyebrow">Information Gap</div>
+<h1>WHAT DINERS KNOW VS. WHAT THEY DON'T</h1>
+<div class="grid2" style="margin-top:35px">
+<div class="panel"><h3>EASY TO FIND</h3><ul><li>Menu</li><li>Price</li><li>Reviews</li><li>Photos</li><li>Location</li><li>Hours</li></ul></div>
+<div class="panel"><h3>HARDER TO FIND</h3><ul><li>Who owns it?</li><li>Parent company</li><li>Restaurant group</li><li>Acquisition history</li><li>Ownership changes</li></ul></div>
+</div>
+<h2 style="text-align:center;margin-top:55px">Should ownership be as easy to find as a menu?</h2>
+<p class="interaction">Click/toggle between visible and hidden information.</p>
+</section>
+
+<section class="question">
+<div class="eyebrow">The Question</div>
+<h1>WHAT IF OWNERSHIP WAS AS EASY TO FIND AS A MENU?</h1>
+<div class="profile" id="profile" onclick="this.classList.toggle('open')">
+<div class="profile-head"><div><div class="eyebrow" style="font-size:11px">NYC RESTAURANT OWNERSHIP</div><strong style="font-size:30px">THE SMITH</strong><div>📍 East Village, NYC</div></div><span class="verified">✓ VERIFIED</span></div>
+<div class="profile-body">
+<div><div class="label">Ownership</div><strong>Corner Table Restaurants</strong><p>Restaurant group identified through company and public business records.</p></div>
+<div><div class="label">Parent / Group</div><strong>Corner Table Restaurants</strong></div>
+<div><div class="label">Ownership History</div><strong>2007</strong> — The Smith founded<br><small>Jeffrey Lefcourt and Michael Jacobs</small></div>
+<div class="profile-details"><div class="label">Sources</div><p>Corner Table Restaurants — About Us</p><p>NYC public business records</p></div>
+</div>
+<div class="profile-foot"><span>LAST UPDATED · NOVEMBER 2026</span><span>Click to explore ownership →</span></div>
+</div>
+<p class="interaction">Click the sample profile to explore ownership information.</p>
+</section>
+
+<section class="final">
+<div class="eyebrow">The Question</div>
+<h1>KNOW WHO IS BEHIND THE PLACES YOU SUPPORT.</h1>
+<p class="ask">Make restaurant ownership easier to see.<br><br>Give diners the information to make more informed choices about where they spend their money.</p>
+<p class="interaction">Scroll to the final takeaway.</p>
+</section>
+</body>
+</html>
