@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Really Owns NYC Restaurants?</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root{
+  --ink:#000000;
+  --background:#FFFFFF;
+  --panel:#F2F2F2;
+  --highlight:#E8A8AD;
+  --local:#355B43;
+  --pe:#A8433D;
+  --line:#000000;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--background);color:var(--ink);
+  font-family:Inter,Arial,sans-serif;font-size:20px;line-height:1.35;
+}
+h1,h2,h3,p{margin-top:0}
+h1,h2{font-weight:700}
+h1{font-size:clamp(42px,7vw,72px);line-height:1.02;letter-spacing:-.045em}
+h2{font-size:32px;line-height:1.08;letter-spacing:-.025em}
+h3{font-size:24px;line-height:1.1}
+.subtitle{font-size:24px;font-weight:600}
+.body{font-size:20px}
+.source{font-size:16px;line-height:1.35}
+.container{width:min(1120px,calc(100% - 48px));margin:auto}
+section{min-height:100vh;padding:88px 0;display:flex;align-items:center}
+.eyebrow{font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:20px}
+.note{font-size:16px;color:#333;margin-top:18px}
+.source-block{margin-top:28px;padding-top:14px;border-top:1px solid #777}
+
+/* color meaning */
+.badge-local{background:var(--local);color:#fff}
+.badge-pe{background:var(--pe);color:#fff}
+.badge-highlight{background:var(--highlight);color:#000}
+.highlight{background:var(--highlight);padding:0 .08em}
+.local-text{color:var(--local)}
+.pe-text{color:var(--pe)}
+
+/* top navigation */
+.progress{position:fixed;top:0;left:0;width:0;height:5px;background:var(--highlight);z-index:30}
+.nav{
+  position:fixed;top:5px;left:0;width:100%;z-index:20;
+  display:flex;justify-content:space-between;padding:14px 24px;
+  font-size:16px;font-weight:600;pointer-events:none;
+}
+.nav span{background:rgba(255,255,255,.92);padding:4px 7px}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;width:330px;height:330px;border-radius:50%;
+  background:var(--highlight);right:-90px;bottom:-70px;z-index:-1;
+}
+.hero-copy{max-width:920px}
+.hero .subtitle{max-width:700px;margin-top:28px}
+.scroll{margin-top:70px;font-size:16px;font-weight:600}
+
+/* comparison */
+.comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:35px}
+.panel{background:var(--panel);padding:32px}
+.panel.dark{background:var(--ink);color:#fff}
+.panel h3{margin-bottom:22px}
+.panel ul{list-style:none;margin:0;padding:0}
+.panel li{padding:12px 0;border-bottom:1px solid #aaa}
+.panel.dark li{border-color:#555}
+
+/* ownership layers */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:38px}
+.layer{
+  border:1.5px solid var(--ink);padding:28px;min-height:190px;
+  cursor:pointer;background:#fff;transition:.2s;
+}
+.layer:hover,.layer.active{background:var(--highlight)}
+.layer-number{font-size:16px;font-weight:700;margin-bottom:34px}
+.layer-title{font-size:24px;font-weight:700}
+.layer-desc{font-size:16px;margin-top:14px;display:none}
+.layer.active .layer-desc{display:block}
+
+/* evidence */
+.evidence-card{
+  margin-top:32px;border:1.5px solid var(--ink);
+  background:#fff;padding:0;
+}
+.card-head{
+  display:flex;justify-content:space-between;gap:20px;align-items:flex-start;
+  padding:28px;background:var(--panel);border-bottom:1.5px solid var(--ink);
+}
+.card-head h3{margin-bottom:8px}
+.badge{font-size:14px;font-weight:700;padding:8px 11px;white-space:nowrap}
+.card-body{padding:30px}
+.row{
+  display:grid;grid-template-columns:210px 1fr;gap:24px;
+  padding:18px 0;border-top:1px solid #999;
+}
+.row:first-child{border-top:0;padding-top:0}
+.label{font-size:16px;font-weight:700;text-transform:uppercase}
+.value{font-size:20px}
+
+/* timeline */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);margin:28px 0 8px}
+.time{
+  border-top:4px solid var(--ink);padding:18px 14px 18px 0;
+  margin-right:14px;
+}
+.time:last-child{margin-right:0}
+.year{font-size:16px;font-weight:700}
+.event{font-size:20px;font-weight:700;margin-top:7px}
+.detail{font-size:16px;margin-top:7px}
+
+/* turn */
+.turn{background:var(--ink);color:#fff}
+.turn h2{max-width:1000px}
+.turn .highlight{color:#000}
+.turn .emphasis{display:block;margin-top:24px;color:var(--highlight)}
+.turn .note{color:#ddd}
+
+/* information gap */
+.gap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:35px}
+.gap .panel{min-height:430px}
+.question{
+  margin-top:46px;font-size:32px;font-weight:700;
+  max-width:800px;
+}
+
+/* consumer tool */
+.tool-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}
+.tool-copy h2{max-width:600px}
+.profile{
+  border:1.5px solid var(--ink);background:#fff;
+  box-shadow:12px 12px 0 var(--highlight);
+  cursor:pointer;
+}
+.profile-head{
+  padding:24px;border-bottom:1.5px solid var(--ink);
+  display:flex;justify-content:space-between;gap:18px;
+}
+.profile-kicker{font-size:16px;font-weight:700}
+.profile-name{font-size:32px;font-weight:700;margin-top:6px}
+.profile-location{font-size:16px;margin-top:5px}
+.verified{background:var(--local);color:#fff;padding:8px 10px;font-size:13px;font-weight:700;height:max-content}
+.profile-section{padding:20px 24px;border-bottom:1px solid #999}
+.profile-section .label{margin-bottom:7px}
+.profile-foot{
+  background:var(--panel);padding:15px 24px;font-size:16px;
+  display:flex;justify-content:space-between;gap:15px;font-weight:600;
+}
+
+/* final */
+.final{background:var(--highlight)}
+.final h2{max-width:900px}
+.cta{
+  display:inline-block;margin-top:30px;background:var(--ink);color:#fff;
+  padding:16px 22px;text-decoration:none;font-size:16px;font-weight:700;
+}
+.final .source-block{max-width:760px;border-color:#555}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:.65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:800px){
+  section{padding:76px 0}
+  .container{width:min(100% - 32px,1120px)}
+  .comparison,.layers,.gap,.tool-wrap{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr 1fr}
+  .row{grid-template-columns:1fr;gap:7px}
+  .card-head{flex-direction:column}
+  .profile-foot{flex-direction:column}
+}
+@media(max-width:520px){
+  h1{font-size:42px}
+  h2{font-size:28px}
+  .subtitle{font-size:20px}
+  body{font-size:18px}
+  .timeline{grid-template-columns:1fr}
+  .profile-name{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="nav">
+  <span>WHO OWNS NYC RESTAURANTS?</span>
+  <span id="screen">01 / 09</span>
+</div>
+
+<section class="hero">
+  <div class="container reveal">
+    <div class="eyebrow">Restaurant ownership in NYC</div>
+    <h1>YOU’RE CHOOSING WHERE TO EAT TONIGHT.</h1>
+    <p class="subtitle">But what if there’s something important you can’t see?</p>
+    <div class="scroll">Scroll to look behind the restaurant ↓</div>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <div class="eyebrow">The hidden layer</div>
+    <h2>A RESTAURANT’S STORY DOESN’T ALWAYS END AT THE FRONT DOOR.</h2>
+    <div class="comparison">
+      <div class="panel">
+        <h3>WHAT I SEE</h3>
+        <ul><li>Food</li><li>Atmosphere</li><li>Reviews</li><li>Location</li><li>Branding</li></ul>
+      </div>
+      <div class="panel dark">
+        <h3>WHAT I DON’T SEE</h3>
+        <ul><li>Parent company</li><li>Restaurant group</li><li>Holding company</li><li>Acquisition history</li></ul>
+      </div>
+    </div>
+    <p class="note">Ownership structures vary. Not every restaurant has every layer.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <div class="eyebrow">Look behind the restaurant</div>
+    <h2>ONE RESTAURANT CAN SIT INSIDE A LARGER OWNERSHIP STRUCTURE.</h2>
+    <div class="layers">
+      <div class="layer" onclick="toggleLayer(this)">
+        <div class="layer-number">01</div>
+        <div class="layer-title">RESTAURANT</div>
+        <div class="layer-desc">The restaurant brand and location diners recognize.</div>
+      </div>
+      <div class="layer" onclick="toggleLayer(this)">
+        <div class="layer-number">02</div>
+        <div class="layer-title">RESTAURANT GROUP</div>
+        <div class="layer-desc">One company can operate multiple restaurant concepts.</div>
+      </div>
+      <div class="layer" onclick="toggleLayer(this)">
+        <div class="layer-number">03</div>
+        <div class="layer-title">PARENT / HOLDING COMPANY</div>
+        <div class="layer-desc">A higher-level entity may own or invest in the business.</div>
+      </div>
+    </div>
+    <p class="note">Click a layer to reveal what it means.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <div class="eyebrow">Evidence 01</div>
+    <h2>LOS TACOS NO. 1</h2>
+    <p class="subtitle">Started in Chelsea Market / NYC</p>
+
+    <div class="evidence-card">
+      <div class="card-head">
+        <div>
+          <h3>STRATEGIC INVESTMENT</h3>
+          <div class="value">TSG Consumer Partners, a private-equity firm</div>
+        </div>
+        <div class="badge badge-pe">PE INVESTMENT</div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="label">Founded</div>
+          <div class="value">2013 by Christian Pineda, Tyler Sanders &amp; Kyle Cameron</div>
+        </div>
+        <div class="row">
+          <div class="label">Ownership change</div>
+          <div class="value">September 2026 — TSG Consumer Partners invested to support expansion. Financial terms and the size of TSG's stake were not disclosed.</div>
+        </div>
+        <div class="row">
+          <div class="label">Current leadership</div>
+          <div class="value">Christian Pineda — Co-founder &amp; CEO<br>Jacobo Ackerman — Chief Operating Partner</div>
+        </div>
+        <div class="source-block source">
+          <strong>Source</strong><br>
+          QSR Magazine, Sept. 4, 2026<br>
+          Los Tacos No. 1 — Official Website
+        </div>
+      </div>
+    </div>
+    <p class="note">Scroll through the evidence to see how outside investment can become part of a restaurant's story.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <div class="eyebrow">Evidence 02</div>
+    <h2>POPUP BAGELS</h2>
+    <p class="subtitle">Started in Westport, Connecticut</p>
+
+    <div class="evidence-card">
+      <div class="card-head">
+        <div>
+          <h3>OUTSIDE INVESTMENT</h3>
+          <div class="value">Stripes, Tastemaker Capital, Habitat Partners &amp; Tiger Global</div>
+        </div>
+        <div class="badge badge-highlight">OUTSIDE INVESTMENT</div>
+      </div>
+      <div class="card-body">
+        <div class="timeline">
+          <div class="time">
+            <div class="year">2020</div>
+            <div class="event">Founded</div>
+            <div class="detail">Adam Goldberg</div>
+          </div>
+          <div class="time">
+            <div class="year">2023</div>
+            <div class="event">$8M Series A</div>
+            <div class="detail">Led by Stripes</div>
+          </div>
+          <div class="time">
+            <div class="year">2024</div>
+            <div class="event">$27M Series B</div>
+            <div class="detail">Led by Stripes</div>
+          </div>
+          <div class="time">
+            <div class="year">2026</div>
+            <div class="event">Tiger Global</div>
+            <div class="detail">Reported $300M valuation</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Ownership change</div>
+          <div class="value">2022–2026 — multiple rounds of outside funding. Exact ownership stakes were not disclosed.</div>
+        </div>
+        <div class="row">
+          <div class="label">Current leadership</div>
+          <div class="value">Tory Bartlett — CEO</div>
+        </div>
+        <div class="source-block source">
+          <strong>Source</strong><br>
+          Consumed, “Inside the Venture-Backed Bagel Boom”<br>
+          DLA Piper · GlobeNewswire · Bloomberg Law
+        </div>
+      </div>
+    </div>
+    <p class="note">Scroll through the timeline to see how outside investment accompanied expansion.</p>
+  </div>
+</section>
+
+<section class="turn">
+  <div class="container reveal">
+    <div class="eyebrow">The turn</div>
+    <h2>
+      THE PROBLEM ISN’T THAT A RESTAURANT HAS INVESTORS.
+      <span class="emphasis">THE PROBLEM IS HOW DIFFICULT OWNERSHIP INFORMATION CAN BE FOR DINERS TO FIND.</span>
+    </h2>
+    <p class="note">Scroll from individual examples to the larger information gap.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <div class="eyebrow">Information gap</div>
+    <h2>WHAT DINERS KNOW VS. WHAT THEY DON’T</h2>
+    <div class="gap">
+      <div class="panel">
+        <h3>EASY TO FIND</h3>
+        <ul><li>Menu</li><li>Price</li><li>Reviews</li><li>Photos</li><li>Location</li><li>Hours</li></ul>
+      </div>
+      <div class="panel dark">
+        <h3>HARDER TO FIND</h3>
+        <ul><li>Who owns it?</li><li>Parent company</li><li>Restaurant group</li><li>Acquisition history</li><li>Ownership changes</li></ul>
+      </div>
+    </div>
+    <div class="question">SHOULD OWNERSHIP BE AS EASY TO FIND AS A MENU?</div>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <div class="tool-wrap">
+      <div class="tool-copy">
+        <div class="eyebrow">The consumer tool</div>
+        <h2>BEFORE YOU BITE, KNOW WHO’S BEHIND IT.</h2>
+        <p class="subtitle">Search a restaurant. See the group, ownership type, other concepts, and what the information means.</p>
+      </div>
+
+      <div class="profile" onclick="this.classList.toggle('expanded')">
+        <div class="profile-head">
+          <div>
+            <div class="profile-kicker">NYC RESTAURANT OWNERSHIP</div>
+            <div class="profile-name">CARBONE</div>
+            <div class="profile-location">NYC</div>
+          </div>
+          <div class="verified">✓ VERIFIED</div>
+        </div>
+        <div class="profile-section">
+          <div class="label">Restaurant group</div>
+          <div class="value">Major Food Group</div>
+        </div>
+        <div class="profile-section">
+          <div class="label">Ownership type</div>
+          <div class="value">Restaurant group</div>
+        </div>
+        <div class="profile-section">
+          <div class="label">Other concepts</div>
+          <div class="value">Sadelle's · Parm · Torrisi</div>
+        </div>
+        <div class="profile-section" style="background:var(--highlight)">
+          <div class="label">What does this mean?</div>
+          <div class="value" style="font-size:18px">This restaurant is part of a larger restaurant group operating multiple NYC concepts.</div>
+        </div>
+        <div class="profile-foot">
+          <span>Ownership information is based on publicly available sources and may change over time.</span>
+          <span>Source: Corporate website, public records, reporting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="container reveal">
+    <div class="eyebrow">The question</div>
+    <h2>KNOW WHO IS BEHIND THE PLACES YOU SUPPORT.</h2>
+    <p class="subtitle">Before you choose your next restaurant:</p>
+    <h2><span class="highlight">KNOW WHO’S BEHIND IT.</span></h2>
+    <p class="subtitle" style="max-width:800px">A public-facing restaurant ownership directory could make ownership information easier to find, understand, and compare.</p>
+    <a href="#" class="cta">EXPLORE NYC RESTAURANTS →</a>
+    <div class="source-block source">
+      Ownership information is based on publicly available sources and may change over time.
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleLayer(el){
+  document.querySelectorAll('.layer').forEach(x=>{
+    if(x!==el)x.classList.remove('active');
+  });
+  el.classList.toggle('active');
+}
+
+const revealEls=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold:.12});
+revealEls.forEach(el=>observer.observe(el));
+
+const sections=document.querySelectorAll('section');
+const screen=document.getElementById('screen');
+const progress=document.getElementById('progress');
+
+window.addEventListener('scroll',()=>{
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  progress.style.width=(max?window.scrollY/max*100:0)+'%';
+  let current=1;
+  sections.forEach((s,i)=>{
+    if(window.scrollY+window.innerHeight*.45>=s.offsetTop) current=i+1;
+  });
+  screen.textContent=String(current).padStart(2,'0')+' / '+String(sections.length).padStart(2,'0');
+});
+</script>
+</body>
+</html>
